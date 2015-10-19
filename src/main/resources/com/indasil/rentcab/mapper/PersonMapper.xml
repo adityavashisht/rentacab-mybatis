@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.indasil.rentcab.mapper.PersonMapper">
+
+    <resultMap id="personMap" type="com.indasil.rentcab.domain.Person">
+        <result property="id" column="personId"/>
+        <result property="name" column="personName"/>
+    </resultMap>
+
+
+    <!-- Create -->
+    <insert id="create" parameterType="com.indasil.rentcab.domain.Person"
+            useGeneratedKeys="true" keyProperty="person.id" keyColumn="ID">
+
+        insert into Person values (#{person.id}, #{person.name})
+
+
+    </insert>
+
+
+    <!-- Read -->
+
+    <select id="read" parameterType="map" resultMap="personMap">
+
+        select id as personId, name as personName
+        from Person
+        where id = #{id}
+
+        <if test="name!=null">
+            AND
+            name = #{name}
+        </if>
+
+    </select>
+
+    <update id="update" parameterType="com.indasil.rentcab.domain.Person">
+        update Person SET
+        name = #{person.name}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from Person where id = #{value}
+    </delete>
+
+
+</mapper>
